@@ -97,8 +97,6 @@ export class BodyComponent {
   submit() {
     const url = 'https://sipserver.1ounce.in/shop/task/';
 
-    // if(this.cardArray.amount)
-
     const paymentData = [
       this.formatPaymentData(1, this.upiArray),
       this.formatPaymentData(2, this.cardArray),
