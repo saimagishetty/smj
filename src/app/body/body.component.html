@@ -1,0 +1,180 @@
+<div class="flex-column">
+    <div>
+        <div class="flex-row jc-ai-c">
+            <span class="material-symbols-outlined">
+                credit_card
+            </span>
+            <span>Card</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let a of tableHeads">{{a}}</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of cardArray;let i=index">
+                <tr>
+                    <td>
+                        <input type="text" name="amount{{i}}" placeholder="₹ Enter amount..."
+                            (keydown)="onKeyDown($event, 1)" [(ngModel)]="a.amount">
+                    </td>
+                    <td>
+                        <input type="date" name="date{{i}}" [(ngModel)]="a.date">
+                    </td>
+                    <td>
+                        <select name="" id="">
+                            <option value="">Enter Pos</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input name="payment_info{{i}}" type="text" placeholder="Enter card details..."
+                            [(ngModel)]="a.payment_info">
+                    </td>
+                    <td *ngIf="i>=1">
+                        <span (click)="delete_arry(i,1)" class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="add-new" (click)="add_new(1)">
+            +Add(Shift+Enter)
+        </div>
+    </div>
+    <div>
+        <div class="flex-row jc-ai-c">
+            <span class="material-symbols-outlined">
+                receipt_long
+            </span>
+            <span>UPI/IMPS</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let a of tableHeads">{{a}}</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of upiArray;let i=index">
+                <tr>
+                    <td>
+                        <input type="text" name="amount{{i}}" placeholder="₹ Enter amount..."
+                            (keydown)="onKeyDown($event, 2)" [(ngModel)]="a.amount">
+                    </td>
+                    <td>
+                        <input type="date" name="date{{i}}" [(ngModel)]="a.date">
+                    </td>
+                    <td>
+                        <select name="" id="">
+                            <option value="">Enter Bank</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input name="payment_info{{i}}" type="text" placeholder="Enter card details..."
+                            [(ngModel)]="a.payment_info">
+                    </td>
+                    <td *ngIf="i>=1">
+                        <span (click)="delete_arry(i,2)" class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="add-new" (click)="add_new(2)">
+            +Add(Shift+Enter)
+        </div>
+    </div>
+    <div>
+        <div class="flex-row jc-ai-c">
+            <span class="material-symbols-outlined">
+                paid
+            </span>
+            <span>RTGS/NEFT</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let a of tableHeads">{{a}}</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of rtgsArray;let i=index">
+                <tr>
+                    <td>
+                        <input type="text" name="amount{{i}}" placeholder="₹ Enter amount..."
+                            (keydown)="onKeyDown($event, 3)" [(ngModel)]="a.amount">
+                    </td>
+                    <td>
+                        <input type="date" name="date{{i}}" [(ngModel)]="a.date">
+                    </td>
+                    <td>
+                        <select name="" id="">
+                            <option value="">Enter Bank</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input name="payment_info{{i}}" type="text" placeholder="Enter card details..."
+                            [(ngModel)]="a.payment_info">
+                    </td>
+                    <td *ngIf="i>=1">
+                        <span (click)="delete_arry(i,3)" class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="add-new" (click)="add_new(3)">
+            +Add(Shift+Enter)
+        </div>
+    </div>
+    <div>
+        <div class="flex-row jc-ai-c">
+            <span class="material-symbols-outlined">
+                payments
+            </span>
+            <span>Cheque</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let a of tableHeads">{{a}}</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let a of chequeArray;let i=index">
+                <tr>
+                    <td>
+                        <input type="text" name="amount{{i}}" placeholder="₹ Enter amount..."
+                            (keydown)="onKeyDown($event, 4)" [(ngModel)]="a.amount">
+                    </td>
+                    <td>
+                        <input type="date" name="date{{i}}" [(ngModel)]="a.date">
+                    </td>
+                    <td>
+                        <select name="" id="">
+                            <option value="">Enter Bank</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input name="payment_info{{i}}" type="text" placeholder="Enter card details..."
+                            [(ngModel)]="a.payment_info">
+                    </td>
+                    <td *ngIf="i>=1">
+                        <span (click)="delete_arry(i,4)" class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="add-new" (click)="add_new(4)">
+            +Add(Shift+Enter)
+        </div>
+    </div>
+    <div>
+        <button (click)="submit()">Submit</button>
+    </div>
+    <div>
+        {{showMessage}}
+    </div>
+</div>
