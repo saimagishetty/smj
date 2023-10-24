@@ -7,81 +7,45 @@ import { DataService } from '../data/data.service';
   styleUrls: ['./body.component.scss']
 })
 export class BodyComponent {
-
   constructor(
     private dataService: DataService
   ) { }
-
+  showMessage: any
   tableHeads = ["Amount", "Date", "Bank", "Card details", ""]
-  newObj = [
-    {
+  newObj = [{
       "date": "",
       "amount": "",
       "payment_info": ""
     }
   ]
-  showMessage: any
-  cardArray: any[] = [];
-  upiArray: any[] = [];
-  rtgsArray: any[] = [];
-  chequeArray: any[] = [];
-  ngOnInit() {
-    let copynew = JSON.parse(JSON.stringify(this.newObj));
-    let copynew1 = JSON.parse(JSON.stringify(this.newObj));
-    let copynew2 = JSON.parse(JSON.stringify(this.newObj));
-    let copynew3 = JSON.parse(JSON.stringify(this.newObj));
-    this.cardArray.push(copynew)
-    this.upiArray.push(copynew1)
-    this.rtgsArray.push(copynew2)
-    this.chequeArray.push(copynew3)
-  }
+  formData = [{
+      name: "Card",
+      log: "credit_card",
+      rows: [JSON.parse(JSON.stringify(this.newObj))]
+    },{
+      name: "UPI/IMPS",
+      log: "receipt_long",
+      rows: [JSON.parse(JSON.stringify(this.newObj))]
+    },{
+      name: "RTGS/NEFT",
+      log: "paid",
+      rows: [JSON.parse(JSON.stringify(this.newObj))]
+    },{
+      name: "Cheque",
+      log: "payments",
+      rows: [JSON.parse(JSON.stringify(this.newObj))]
+    },]
   onKeyDown(event: KeyboardEvent, index: number) {
     if (event.shiftKey && event.key === 'Enter') {
-      let copynew = JSON.parse(JSON.stringify(this.newObj));
-      if (index == 1) {
-        this.cardArray.push(copynew)
-      }
-      else if (index == 2) {
-        this.upiArray.push(copynew)
-      }
-      else if (index == 3) {
-        this.rtgsArray.push(copynew)
-      }
-      else if (index == 4) {
-        this.chequeArray.push(copynew)
-      }
+      this.formData[index].rows.push(JSON.parse(JSON.stringify(this.newObj)))
     }
   }
-  add_new(e: any) {
-    let copynew = JSON.parse(JSON.stringify(this.newObj));
-    if (e == 1) {
-      this.cardArray.push(copynew)
-    }
-    else if (e == 2) {
-      this.upiArray.push(copynew)
-    }
-    else if (e == 3) {
-      this.rtgsArray.push(copynew)
-    }
-    else if (e == 4) {
-      this.chequeArray.push(copynew)
-    }
+  add_new(index: any) {
+    this.formData[index].rows.push(JSON.parse(JSON.stringify(this.newObj)))
   }
-  delete_arry(i: any, e: any) {
-    if (e == 1) {
-      this.cardArray.splice(i, i)
-    }
-    else if (e == 2) {
-      this.upiArray.splice(i, i)
-    }
-    else if (e == 3) {
-      this.rtgsArray.splice(i, i)
-    }
-    else if (e == 4) {
-      this.chequeArray.splice(i, i)
-    }
+  delete_arry(i: any, index: any) {
+    this.formData[index].rows.splice(i, i)
   }
-
   formatPaymentData(mode: number, dataArray: any[]): any {
     return {
       mode,
@@ -96,23 +60,25 @@ export class BodyComponent {
   }
   submit() {
     const url = 'https://sipserver.1ounce.in/shop/task/';
-
+    const paymentData_copy = this.formData.map((a, index) => {
+      return {
+        mode: index,
+        options: a.rows
+      }
+    });
     const paymentData = [
-      this.formatPaymentData(1, this.upiArray),
-      this.formatPaymentData(2, this.cardArray),
-      this.formatPaymentData(3, this.rtgsArray),
-      this.formatPaymentData(4, this.chequeArray)
+      this.formatPaymentData(1, this.formData[1].rows),
+      this.formatPaymentData(2, this.formData[0].rows),
+      this.formatPaymentData(3, this.formData[2].rows),
+      this.formatPaymentData(4, this.formData[3].rows)
     ];
-
     const data = {
       payment_data: JSON.stringify(paymentData)
     };
-
     this.dataService.postData(url, data).subscribe(
       response => {
         console.log('API Response:', response);
         this.showMessage = response.message
-
       },
       error => {
         console.error('Error:', error);
