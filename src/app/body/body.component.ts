@@ -13,6 +13,7 @@ export class BodyComponent {
     private dataService: DataService
   ) { }
   showMessage: any
+  loading=false
   tableHeads = ["Amount", "Date", "Bank", "Card details", ""]
   formData = [
     new Template('Card', 'credit_card',[new SampleData()]),
@@ -31,6 +32,7 @@ export class BodyComponent {
     this.formData[index].rows.splice(i, 1)
   }
   submit() {
+    this.loading=true
     const url = 'https://sipserver.1ounce.in/shop/task/';
     const paymentData = this.formData.map((template, index) => {
       const mode = index + 1;
@@ -47,10 +49,12 @@ export class BodyComponent {
     this.dataService.postData(url, data).subscribe(
       response => {
         console.log('API Response:', response);
+        this.loading=false
         this.showMessage = response.message;
       },
       error => {
         console.error('Error:', error);
+        this.loading=false
         this.showMessage = "Something went wrong";
       }
     );

@@ -43,7 +43,8 @@
         </div>
     </div>
     <div>
-        <button (click)="submit()">Submit</button>
+        <button *ngIf="!loading" (click)="submit()">Submit</button>
+        <button *ngIf="loading">Loading...</button>
     </div>
     <div>
         {{showMessage}}
