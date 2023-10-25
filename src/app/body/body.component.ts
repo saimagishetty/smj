@@ -20,20 +20,15 @@ export class BodyComponent {
     new Template('RTGS/NEFT', 'paid', [new SampleData()]),
     new Template('Cheque', 'payments', [new SampleData()])
   ];
-  ngOnInit() {
-    console.log("hey");
-    console.log(this.formData);
-  }
-  onKeyDown(event: KeyboardEvent, index: number) {
-    if (event.shiftKey && event.key === 'Enter') {
-      this.formData[index].rows.push(new SampleData())
+  handleEvent(index: number, event?: KeyboardEvent) {
+    if (event?.shiftKey && event?.key === 'Enter') {
+      this.formData[index].rows.push(new SampleData());
+    } else if (!event) {
+      this.formData[index].rows.push(new SampleData());
     }
   }
-  add_new(index: any) {
-    this.formData[index].rows.push(new SampleData())
-  }
   delete_arry(i: any, index: any) {
-    this.formData[index].rows.splice(i, i)
+    this.formData[index].rows.splice(i, 1)
   }
   submit() {
     const url = 'https://sipserver.1ounce.in/shop/task/';
