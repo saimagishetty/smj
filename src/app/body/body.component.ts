@@ -16,10 +16,10 @@ export class BodyComponent {
   loading=false
   tableHeads = ["Amount", "Date", "Bank", "Card details", ""]
   formData = [
-    new Template('Card', 'credit_card',[new SampleData()]),
-    new Template('UPI/IMPS', 'receipt_long',[new SampleData()]),
-    new Template('RTGS/NEFT', 'paid', [new SampleData()]),
-    new Template('Cheque', 'payments', [new SampleData()])
+    new Template('Card', 'credit_card',2,[new SampleData()]),
+    new Template('UPI/IMPS', 'receipt_long',1,[new SampleData()]),
+    new Template('RTGS/NEFT', 'paid', 3,[new SampleData()]),
+    new Template('Cheque', 'payments',4, [new SampleData()])
   ];
   handleEvent(index: number, event?: KeyboardEvent) {
     if (event?.shiftKey && event?.key === 'Enter') {
@@ -34,8 +34,8 @@ export class BodyComponent {
   submit() {
     this.loading=true
     const url = 'https://sipserver.1ounce.in/shop/task/';
-    const paymentData = this.formData.map((template, index) => {
-      const mode = index + 1;
+    const paymentData = this.formData.map((template) => {
+      const mode = template.mode;
       const options = template.rows.map((row:any) => ({
         date: row.date,
         amount: row.amount,
